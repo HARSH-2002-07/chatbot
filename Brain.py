@@ -3,11 +3,17 @@ Install the Google AI Python SDK
 
 $ pip install google-generativeai
 """
-
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-genai.configure(api_key="AIzaSyCtXsdc56aGiy2hD4cXPFQT8edN84-lgCU")
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key from environment variable
+api_key = os.getenv("GOOGLE_API_KEY")
+
+genai.configure(api_key=api_key)
 
 # Create the model
 generation_config = {
