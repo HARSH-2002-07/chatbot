@@ -27,9 +27,3 @@ def get_weather(api_key, city):
     else:
         return (f"Failed to fetch weather. Status code: {response.status_code}")
 
-# Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
-#Weather_api = "b9f13f8ee9299ce9c445623e15da9e37"
-#city_name = "Ghaziabad"
-  # Replace with the desired city name
-#get_weather(Weather_api, city_name)
-
