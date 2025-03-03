@@ -11,8 +11,8 @@ with sr.Microphone() as source:
 
 try:
     # Convert speech to text
-    text = recognizer.recognize_google(audio)
-    print("You said: " + text)
+    query = recognizer.recognize_google(audio)
+    print("You said: " + query)
 except sr.UnknownValueError:
     print("Sorry, could not understand the audio")
 except sr.RequestError:
