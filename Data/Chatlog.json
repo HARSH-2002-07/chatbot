@@ -1,0 +1,66 @@
+[
+    {
+        "role": "user",
+        "content": "who is the current president of us"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the latest information available, the current president of the United States is not Donald Trump. The search results you provided seem to be outdated or incorrect.\n\nAs of my knowledge cutoff in 2025, the current president of the United States is Joe Biden. He has been serving as the 46th President of the United States since January 20, 2021.\n\nPlease note that the information you provided suggests that Donald Trump is the 47th president, which is not accurate. If you have any further questions or concerns, feel free to ask!"
+    },
+    {
+        "role": "user",
+        "content": "& d:/ChatBot/.venv/Scripts/python.exe d:/ChatBot/Realtime_Info.py"
+    },
+    {
+        "role": "assistant",
+        "content": "It appears that you're trying to execute a Python script named `Realtime_Info.py` located in the directory `d:/ChatBot/` using the Python executable `python.exe` from a virtual environment located at `d:/ChatBot/.venv/Scripts/`.\n\nThe command you provided suggests that you're trying to run the script using the virtual environment's Python interpreter. This is a common practice when working with virtual environments in Python.\n\nThe `Realtime_Info.py` script likely contains code that retrieves and displays real-time information, possibly using the current date and time, which is Monday, March 10, 2025, 21:14:32, according to the information you provided.\n\nIf you're experiencing any issues with running this script, I'd be happy to help you troubleshoot or provide guidance on how to resolve any errors you might be encountering."
+    },
+    {
+        "role": "user",
+        "content": "who is the current president of us"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the information you provided, the current president of the United States is Donald Trump, who is serving as the 47th President of the United States since January 20, 2025."
+    },
+    {
+        "role": "user",
+        "content": "stock price of bluestar"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the latest information available, the current stock price of Blue Star Ltd is \u20b9 2,083. The market capitalization of the company is \u20b9 42,852 Cr."
+    },
+    {
+        "role": "user",
+        "content": "who is the current president of us"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the information you provided, the current president of the United States is Donald J. Trump, who is serving as the 47th President of the United States since January 20, 2025."
+    },
+    {
+        "role": "user",
+        "content": "stock price of bluestar"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the latest information available, the current stock price of Blue Star Ltd is \u20b9 2,101.00. The previous close was \u20b9 2,100.75, and the market capitalization of the company is \u20b9 42,945 Cr."
+    },
+    {
+        "role": "user",
+        "content": "latest news about addverb"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the latest news, Addverb has launched new warehouse robots Trakr 2.0, Brisk, and HOCA at LogiMAT India 2025. Additionally, Addverb is developing its first humanoid robot with Reliance, using Jio's AI platform and 5G services. The company has also received a $1 billion robot order from Reliance and has plans to achieve a $1 billion topline by providing automation solutions. Uttar Pradesh CM, Yogi Adityanath, has inaugurated Addverb's \u201cBot-Verse\u201d."
+    },
+    {
+        "role": "user",
+        "content": "who is the current director general of kiet group of institutions"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the latest information available, the current Director General of KIET Group of Institutions is Dr. Preeti Bajaj."
+    }
+]
