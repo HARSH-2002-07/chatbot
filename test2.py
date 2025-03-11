@@ -50,6 +50,8 @@ def SetAssistantStatus(Status):
     with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
         file.write(Status)
 
+SetAssistantStatus("Speaking....")
+
 def GetAssistantStatus(Status):
     with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
         Status = file.read()
