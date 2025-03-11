@@ -81,14 +81,14 @@ class ChatSection(QWidget):
         layout.setSpacing(-100)
         self.chat_text_edit = QTextEdit()
         self.chat_text_edit.setReadOnly(True)
-        self.chat_text_edit.setTextInteractionFlags(Qt.NotextInteraction)
-        self.chat_text_edit.setFrameStyle(QFrame.Noframe)
+        self.chat_text_edit.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
+        self.chat_text_edit.setFrameStyle(QFrame.Shape.NoFrame)
         layout.addWidget(self.chat_text_edit)
         self.setStyleSheet("backgroud-color: black;")
-        layout.setSizeConstraint(QVBoxLayout.setDefaultConstraint)
+        # layout.setSizeConstraint(QVBoxLayout.setDefaultConstraint)
         layout.setStretch(1, 1)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
-        text_color = QColor(Qt.blue)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding))
+        text_color = QColor("blue")
         text_color_text = QTextCharFormat()
         text_color_text.setForeground(text_color)
         self.chat_text_edit.setCurrentCharFormat(text_color_text)
@@ -98,13 +98,13 @@ class ChatSection(QWidget):
         max_gif_size_W = 480
         max_gif_size_H = 270
         movie.setScaledSize(QSize(max_gif_size_W, max_gif_size_H))
-        self.gif_label.setAlignment(Qt.AlignRight | Qt.ALignBottom)
+        self.gif_label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
         self.gif_label.setMovie(movie)
         movie.start()
         layout.addWidget(self.gif_label)
         self.label = QLabel("")
         self.label.setStyleSheet("color: white; font-size: 16px; margin-right: 195px; border: none; margin-top: -30px;")
-        self.label.setAlignment(Qt.AlignRight)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(self.label)
         layout.setSpacing(-10)
         layout.addWidget(self.gif_label)
@@ -195,9 +195,9 @@ class ChatSection(QWidget):
 class InitialScreen(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
-        desktop = QApplication.desktop()
-        screen_width = desktop.screenGeometry().width()
-        screen_height = desktop.screenGeometry().height()
+        desktop = QApplication.primaryScreen()
+        screen_width = desktop.geometry().width()
+        screen_height = desktop.geometry().height()
         content_layout = QVBoxLayout()
         content_layout.setContentsMargins(0, 0, 0, 0)
         gif_label = QLabel()
@@ -205,23 +205,23 @@ class InitialScreen(QWidget):
         gif_label.setMovie(movie)
         max_gif_size_H = int(screen_width / 16*9)
         movie.setScaledSize(QSize(screen_width, max_gif_size_H))
-        gif_label.setAlignment(Qt.AlignCenter)
+        gif_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         movie.start()
-        gif_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        gif_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.icon_label = QLabel()
         pixmap = QPixmap(GraphicsDirectoryPath('Mic_on.png'))
         new_pixmap = pixmap.scaled(60, 60)        
         self.icon_label.setPixmap(new_pixmap)
         self.icon_label.setFixedSize(150,150)
-        self.icon_label.setAlignment(Qt.AlignCenter)
+        self.icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.toggled = True
         self.toggle_icon()
         self.icon_label.mousePressEvent = self.toggle_icon
         self.label = QLabel("")
         self.label.setStyleSheet("color: white; font-size:16px; margin-bottom:0;")
-        content_layout.addWidget(gif_label, alignment=Qt.AlignCenter)
-        content_layout.addWidget(self.label, alignment=Qt.AlignCenter)
-        content_layout.addWidget(self.icon_label, alignment=Qt.AlignCenter)
+        content_layout.addWidget(gif_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        content_layout.addWidget(self.label, alignment=Qt.AlignmentFlag.AlignCenter)
+        content_layout.addWidget(self.icon_label, alignment=Qt.AlignmentFlag.AlignCenter)
         content_layout.setContentsMargins(0, 0, 0, 150)
         self.setLayout(content_layout)
         self.setFixedHeight(screen_height)
@@ -238,7 +238,7 @@ class InitialScreen(QWidget):
     
     def load_icon(self, path, width=60, height=60):
         pixmap = QPixmap(path)
-        new_pixmap = pixmap.scaled(width=width, height=height)
+        new_pixmap = pixmap.scaled(width, height)
         self.icon_label.setPixmap(new_pixmap)
 
     def toggle_icon(self, event=None):
@@ -256,9 +256,9 @@ class MessageScreen(QWidget):
     def __init__(self, parent = None):
         super().__init__(parent)
         
-        desktop = QApplication.desktop()
-        screen_width = desktop.screenGeometry().width()
-        screen_height = desktop.screenGeometry().height()
+        desktop = QApplication.primaryScreen()
+        screen_width = desktop.geometry().width()
+        screen_height = desktop.geometry().height()
         layout = QVBoxLayout()
         label = QLabel("")
         layout.addWidget(label)
@@ -279,7 +279,7 @@ class CustomTopBar(QWidget):
     def initUI(self):
         self.setFixedHeight(50)
         layout = QHBoxLayout(self)
-        layout.setAlignment (Qt.AlignRight) 
+        layout.setAlignment (Qt.AlignmentFlag.AlignRight) 
         home_button = QPushButton()
         home_icon = QIcon(GraphicsDirectoryPath("Home.png"))   ####################################
         home_button.setIcon(home_icon)
@@ -309,8 +309,8 @@ class CustomTopBar(QWidget):
         close_button.clicked.connect(self.closeWindow)
         line_frame = QFrame()
         line_frame.setFixedHeight(1)
-        line_frame.setFrameShape(QFrame.HLine)
-        line_frame.setFrameShadow(QFrame.Sunken)
+        line_frame.setFrameShape(QFrame.Shape.HLine)
+        line_frame.setFrameShadow(QFrame.Shadow.Sunken)
         line_frame.setStyleSheet("border-color: black;")
         title_label = QLabel(f" {str(Assistantname).capitalize()} AI  ")
         title_label.setStyleSheet("color: black; font-size: 18px;; background-color:white")
@@ -330,7 +330,7 @@ class CustomTopBar(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.fillRect(self.rect(), Qt.white)
+        painter.fillRect(self.rect(), QColor("white"))
         super().paintEvent(event)
 
     def minimizeWindow(self):
@@ -380,13 +380,13 @@ class CustomTopBar(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.initUI()
 
     def initUI(self):
-        desktop = QApplication.desktop()
-        screen_width = desktop.screenGeometry().width()
-        screen_height = desktop.screenGeometry().height()
+        desktop = QApplication.primaryScreen()
+        screen_width = desktop.geometry().width()
+        screen_height = desktop.geometry().height()
         stacked_widget = QStackedWidget(self)
         initial_screen = InitialScreen()
         message_screen = MessageScreen()
@@ -402,7 +402,7 @@ def GraphicalUserInterface():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     GraphicalUserInterface()
