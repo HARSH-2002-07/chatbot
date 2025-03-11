@@ -1,43 +1,59 @@
-import wikipedia
-import re
+import tkinter as tk
+from PIL import Image, ImageTk, ImageSequence
 
-def extract_keywords(query):
-    """Extracts key terms from the user query."""
-    keywords = []
-    if "current president" in query.lower():
-        keywords.append("current president")
-    if "US" in query or "America" in query:
-        keywords.append("US president")
-    return keywords
+# Function to animate the GIF
+def play_gif():
+    global gif_frames, gif_index
+    gif_index = (gif_index + 1) % len(gif_frames)
+    gif_label.config(image=gif_frames[gif_index])
+    root.after(100, play_gif)  # Adjust speed here
 
-def get_wikipedia_summary(topic):
-    """Fetches a Wikipedia summary of the given topic."""
-    try:
-        return wikipedia.summary(topic, sentences=10)  # Fetching 10 sentences
-    except wikipedia.exceptions.DisambiguationError as e:
-        return wikipedia.summary(e.options[0], sentences=10)
-    except wikipedia.exceptions.PageError:
-        return "No Wikipedia page found for the topic."
+# Function to switch GIF and execute a function
+def on_image_click():
+    print("Clicked! Changing GIF and executing function...")
 
-def filter_relevant_info(summary, keywords):
-    """Filters the summary to extract only relevant sentences."""
-    sentences = summary.split(". ")
-    relevant_sentences = [s for s in sentences if any(k in s for k in keywords)]
-    return ". ".join(relevant_sentences) if relevant_sentences else "No relevant information found."
+    # Change GIF dynamically
+    load_gif("speaking-gui-unscreen.gif")  # Change to another GIF
 
-# Example Query
-query = "Who is the current president of the US?"
+    # Execute any function
+    execute_function()
 
-# Step 1: Extract keywords from query
-keywords = extract_keywords(query)
+# Example function to execute on click
+def execute_function():
+    print("Executing some function...")
 
-# Step 2: Get Wikipedia data
-summary = get_wikipedia_summary("President of the United States")
+# Function to load a new GIF
+def load_gif(gif_path):
+    global gif_frames, gif_index, gif_label
+    gif = Image.open(gif_path)
+    gif_frames = [ImageTk.PhotoImage(frame.copy().resize((300, 300))) for frame in ImageSequence.Iterator(gif)]
+    gif_index = 0
+    gif_label.config(image=gif_frames[0])  # Set the first frame immediately
+    play_gif()
 
-# Step 3: Filter out relevant information
-result = filter_relevant_info(summary, keywords)
+# Initialize Tkinter
+root = tk.Tk()
+root.title("GIF Switcher UI")
+root.geometry("800x600")
+root.configure(bg="black")
 
-print(query, "1")
-print(keywords, "2")
-print(summary, "3")
-print(result)
+# GIF Display Label (Initialize Before Using)
+gif_label = tk.Label(root, bg="black")
+gif_label.place(x=250, y=100)  # Adjust position
+
+# Load initial GIF
+gif_frames = []
+gif_index = 0
+load_gif("basic-gui-unscreen.gif")  # Default GIF
+
+# Load Clickable Image
+button_img = Image.open("button.png").resize((80, 80))
+button_photo = ImageTk.PhotoImage(button_img)
+
+# Clickable Image (Below GIF)
+button_label = tk.Label(root, image=button_photo, bg="black", cursor="hand2")
+button_label.place(x=360, y=450)
+button_label.bind("<Button-1>", lambda event: on_image_click())
+
+# Run Tkinter main loop
+root.mainloop()
