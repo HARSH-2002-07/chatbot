@@ -13,6 +13,7 @@ from model import FirstLayerDMM
 from Realtime_Info import RealtimeSearchEngine
 # from Automation import Automation
 # from SpeechToText import SpeechToText
+from listen_or_get_query import SpeechRecognition
 from Brain import ChatBot
 from text_to_speech import TextToSpeech
 from dotenv import dotenv_values
@@ -76,8 +77,13 @@ def InitialExecution():
     ShowDefaultChatifNoChats()
     ChatLogIntegration()
     ShowChatsOnGUI()
+    print("Executing...")
 
+print("starting...")
 InitialExecution()
+print("Completed...")
+
+
 
 def MainExecution():
     TaskExecution = False
@@ -85,8 +91,7 @@ def MainExecution():
     ImageGenerationQuery = ""
 
     SetAssistantStatus("Listening...")
-    # Query = SpeechRecognition()
-    Query = "Hello, How are you?"
+    Query = SpeechRecognition()
     ShowTextToScreen(f"{Username} : {Query}")
     SetAssistantStatus("Thinking...")
     Decision = FirstLayerDMM(Query)
@@ -106,14 +111,13 @@ def MainExecution():
         if "generate" in queries:
             ImageGenerationQuery = str(queries)
             ImageExecution = True
-    
+
     for queries in Decision:
         if TaskExecution == False:
             if any(queries.startswith(func) for func in Functions):
-                # run(Automation(list(Decision)))
                 TaskExecution = True
 
-    if ImageExecution == True:
+    if ImageExecution:
         with open(r"Frontend\Files\ImageGeration.data", "w") as file:
             file.write(f"{ImageGenerationQuery}, True")
 
@@ -122,7 +126,6 @@ def MainExecution():
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   stdin=subprocess.PIPE, shell=False)
             subprocess.append(p1)
-
         except Exception as e:
             print(f"Error Starting ImageGeneration.py: {e}")
 
@@ -132,26 +135,29 @@ def MainExecution():
         ShowTextToScreen(f"{Assistantname} : {Answer}")
         SetAssistantStatus("Answering...")
         TextToSpeech(Answer)
+        SetMicrophoneStatus("True")  # Ensure continuous listening
         return True
     
     else:
         for queries in Decision:
             if "general" in queries:
                 SetAssistantStatus("Thinking...")
-                QueryFinal = queries.replace("general ","")
+                QueryFinal = queries.replace("general ", "")
                 Answer = ChatBot(QueryModifier(QueryFinal))
                 ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering...")
                 TextToSpeech(Answer)
+                SetMicrophoneStatus("True")  # Ensure continuous listening
                 return True
             
             elif "realtime" in queries:
                 SetAssistantStatus("Thinking...")
-                QueryFinal = queries.replace("realtime ","")
+                QueryFinal = queries.replace("realtime ", "")
                 Answer = RealtimeSearchEngine(QueryModifier(QueryFinal))
                 ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering...")
                 TextToSpeech(Answer)
+                SetMicrophoneStatus("True")  # Ensure continuous listening
                 return True
             
             elif "exit" in queries:
@@ -160,7 +166,6 @@ def MainExecution():
                 ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering...")
                 TextToSpeech(Answer)
-                SetAssistantStatus("Answering...")
                 os._exit(1)
 
 def FirstThread():

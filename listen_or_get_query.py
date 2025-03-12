@@ -62,8 +62,12 @@ chrome_options.add_argument(f"user-agent={user_agent}")
 chrome_options.add_argument("--use-fake-ui-for-meta-stream")
 chrome_options.add_argument("--use-fake-device-for-media-stream")
 chrome_options.add_argument(f"--unsafely-treat-insecure-origin-as-secure=file:///D:/ChatBot/Data/Voice.html")
+chrome_options.add_experimental_option("prefs", {
+    "profile.default_content_setting_values.media_stream_mic": 1,  # Auto-enable mic
+})
+chrome_options.add_argument("--use-fake-ui-for-media-stream")  # Auto-approve mic access
 
-# chrome_options.add_argument("--headless=new")
+chrome_options.add_argument("--headless=new")
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
