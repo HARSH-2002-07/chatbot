@@ -10,7 +10,7 @@ Assistantname = env_vars.get("Assistantname")
 current_dir = os.getcwd()
 old_chat_message = ""
 TempDirPath = rf"{current_dir}\Frontend\Files"
-GraphicsDirPath = rf"{current_dir}\Frontend\Files"
+GraphicsDirPath = rf"{current_dir}\Frontend\Graphics"
 
 def AnswerModifier(Answer):
     lines = Answer.split('\n')
@@ -41,7 +41,7 @@ def SetMicrophoneStatus(Command):
         file.write(Command)
 
 def GetMicrophoneStatus():
-    with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
+    with open(rf'{TempDirPath}\Mic.data', "r", encoding='utf-8') as file:
         Status = file.read()
 
     return Status
@@ -52,8 +52,8 @@ def SetAssistantStatus(Status):
 
 SetAssistantStatus("Speaking....")
 
-def GetAssistantStatus(Status):
-    with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
+def GetAssistantStatus():
+    with open(rf'{TempDirPath}\Mic.data', "r", encoding='utf-8') as file:
         Status = file.read()
     return Status
 
@@ -65,10 +65,12 @@ def MicButtonClosed():
 
 def GraphicsDirectoryPath(Filename):
     Path = rf'{GraphicsDirPath}\{Filename}'
+    # print(Path)
     return Path
 
 def TempDirectoryPath(Filename):
-    Path = rf'{GraphicsDirPath}\{Filename}'
+    Path = rf'{TempDirPath}\{Filename}'
+    # print(Path)
     return Path
 
 def ShowTextToScreen(Text):
@@ -86,7 +88,7 @@ class ChatSection(QWidget):
         self.chat_text_edit.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
         self.chat_text_edit.setFrameStyle(QFrame.Shape.NoFrame)
         layout.addWidget(self.chat_text_edit)
-        self.setStyleSheet("backgroud-color: black;")
+        self.setStyleSheet("background-color: black;")
         # layout.setSizeConstraint(QVBoxLayout.setDefaultConstraint)
         layout.setStretch(1, 1)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding))
@@ -127,7 +129,7 @@ class ChatSection(QWidget):
                     margin: 0px 0px 0px 0px;
                 }
                            
-                QScrollBar:: handle:vertical { 
+                QScrollBar::handle:vertical { 
                     background: white;
                     min-height: 20px;
                 }
@@ -138,15 +140,16 @@ class ChatSection(QWidget):
                     subcontrol-origin: margin;
                     height: 10px;
                 }                
-                QScrollBar:: up-arrow: vertical, QScrollBar:: down-arrow:vertical { 
+                QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { 
                     border: none;
                     background: none;
                     color: none;
                 }
-                QScrollBar::add-page:vertical, QScrollBar:: sub-page:vertical {
+                QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                     background: none;
                 }
        """)
+        # print(self.styleSheet())
     def loadMessages(self):
         global old_chat_message
         with open(TempDirectoryPath('Responses.data'), "r", encoding='utf-8') as file:
@@ -211,7 +214,7 @@ class InitialScreen(QWidget):
         movie.start()
         gif_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.icon_label = QLabel()
-        pixmap = QPixmap(GraphicsDirectoryPath('Mic_on.png'))
+        pixmap = QPixmap(GraphicsDirectoryPath('Mic_on.png'))   #####################################################
         new_pixmap = pixmap.scaled(60, 60)        
         self.icon_label.setPixmap(new_pixmap)
         self.icon_label.setFixedSize(150,150)
